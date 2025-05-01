@@ -1,0 +1,189 @@
+"use client"
+
+import { useState } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { motion } from "framer-motion"
+import { Github, Twitter, Instagram, Youtube, Linkedin, ExternalLink, Mail } from "lucide-react"
+
+export default function LinktreePage() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+
+  const links = [
+    {
+      title: "Portfolio Website",
+      url: "https://example.com",
+      icon: <ExternalLink className="h-5 w-5" />,
+      color: "from-purple-500 to-indigo-500",
+    },
+    {
+      title: "GitHub Profile",
+      url: "https://github.com/BolajiOlajide",
+      icon: <Github className="h-5 w-5" />,
+      color: "from-gray-700 to-gray-900",
+    },
+    {
+      title: "Twitter / X",
+      url: "https://twitter.com",
+      icon: <Twitter className="h-5 w-5" />,
+      color: "from-blue-400 to-blue-600",
+    },
+    {
+      title: "Instagram",
+      url: "https://instagram.com",
+      icon: <Instagram className="h-5 w-5" />,
+      color: "from-pink-500 to-rose-500",
+    },
+    {
+      title: "YouTube Channel",
+      url: "https://youtube.com",
+      icon: <Youtube className="h-5 w-5" />,
+      color: "from-red-500 to-red-700",
+    },
+    {
+      title: "LinkedIn Profile",
+      url: "https://linkedin.com",
+      icon: <Linkedin className="h-5 w-5" />,
+      color: "from-blue-600 to-blue-800",
+    },
+    {
+      title: "Contact Me",
+      url: "mailto:hello@example.com",
+      icon: <Mail className="h-5 w-5" />,
+      color: "from-emerald-500 to-teal-500",
+    },
+  ]
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    show: { y: 0, opacity: 1 },
+  }
+
+  const profileVariants = {
+    hidden: { scale: 0.8, opacity: 0 },
+    show: {
+      scale: 1,
+      opacity: 1,
+      transition: { type: "spring", stiffness: 100 },
+    },
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex flex-col items-center justify-center p-4 sm:p-8">
+      <div className="w-full max-w-md mx-auto">
+        {/* Animated background elements */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          {[...Array(5)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full bg-white/5"
+              style={{
+                width: Math.random() * 200 + 50,
+                height: Math.random() * 200 + 50,
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, Math.random() * 100 - 50],
+                x: [0, Math.random() * 100 - 50],
+              }}
+              transition={{
+                duration: Math.random() * 10 + 10,
+                repeat: Number.POSITIVE_INFINITY,
+                repeatType: "reverse",
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Profile section */}
+        <motion.div
+          className="flex flex-col items-center mb-8"
+          variants={profileVariants}
+          initial="hidden"
+          animate="show"
+        >
+          <motion.div
+            className="relative w-24 h-24 mb-4 rounded-full overflow-hidden border-4 border-white/20"
+            whileHover={{ scale: 1.05, rotate: 5 }}
+          >
+            <Image src="https://avatars.githubusercontent.com/u/25608335?v=4" alt="Profile" fill className="object-cover" priority />
+          </motion.div>
+          <motion.h1 className="text-2xl font-bold text-white mb-2" whileHover={{ scale: 1.05 }}>
+            Bolaji (a.k.a PROTON)
+          </motion.h1>
+          <motion.p
+            className="text-slate-300 text-center max-w-xs mb-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            Software Engineer, Disc Jockey (DJ), Music producer. Sharing my journey and connecting with amazing people.
+          </motion.p>
+        </motion.div>
+
+        {/* Links section */}
+        <motion.div className="space-y-3" variants={containerVariants} initial="hidden" animate="show">
+          {links.map((link, index) => (
+            <motion.div
+              key={index}
+              variants={itemVariants}
+              onHoverStart={() => setHoveredIndex(index)}
+              onHoverEnd={() => setHoveredIndex(null)}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              <Link href={link.url} target="_blank" rel="noopener noreferrer" className="block">
+                <motion.div
+                  className={`relative overflow-hidden rounded-xl bg-gradient-to-r ${link.color} p-px`}
+                  animate={{
+                    boxShadow:
+                      hoveredIndex === index ? "0 0 20px rgba(255, 255, 255, 0.3)" : "0 0 0px rgba(255, 255, 255, 0)",
+                  }}
+                >
+                  <div className="relative flex items-center justify-between bg-slate-900 rounded-xl p-4 h-14">
+                    <div className="flex items-center">
+                      <span className="mr-3 text-white">{link.icon}</span>
+                      <span className="font-medium text-white">{link.title}</span>
+                    </div>
+                    <motion.div
+                      animate={{
+                        x: hoveredIndex === index ? 0 : 5,
+                        opacity: hoveredIndex === index ? 1 : 0.7,
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ExternalLink className="h-4 w-4 text-slate-300" />
+                    </motion.div>
+                  </div>
+                </motion.div>
+              </Link>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Footer */}
+        <motion.div
+          className="mt-12 text-center text-slate-400 text-sm"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+        >
+          <div className="mt-2 text-xs text-slate-500">Copyright © 2025 - present</div>
+        </motion.div>
+      </div>
+    </div>
+  )
+}
