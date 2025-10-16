@@ -1,14 +1,22 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { Github, Twitter, Instagram, Youtube, Linkedin, ExternalLink, AudioLines } from "lucide-react"
-import { ModeToggle } from "@/components/mode-toggle"
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import {
+  Github,
+  Twitter,
+  Instagram,
+  Youtube,
+  Linkedin,
+  ExternalLink,
+  AudioLines,
+} from "lucide-react";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export default function LinktreePage() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const links = [
     // {
@@ -29,6 +37,24 @@ export default function LinktreePage() {
     //     light: "from-gray-400 to-gray-600",
     //   },
     // },
+    {
+      title: "Lost in the World (Vol. 3)",
+      url: "https://youtu.be/LoUGue4MXLc",
+      icon: <Youtube className="h-5 w-5" />,
+      color: {
+        dark: "from-red-500 to-red-700",
+        light: "from-red-400 to-red-600",
+      },
+    },
+    {
+      title: "Lost in the World (Vol. 2)",
+      url: "https://youtu.be/OGZzSphab5c",
+      icon: <Youtube className="h-5 w-5" />,
+      color: {
+        dark: "from-red-500 to-red-700",
+        light: "from-red-400 to-red-600",
+      },
+    },
     {
       title: "Lost in the World (Vol. 1) - Live Mix",
       url: "https://www.youtube.com/watch?v=Boa4iBaIkbw",
@@ -74,7 +100,7 @@ export default function LinktreePage() {
         light: "from-emerald-400 to-teal-400",
       },
     },
-  ]
+  ];
 
   // Animation variants
   const containerVariants = {
@@ -85,12 +111,12 @@ export default function LinktreePage() {
         staggerChildren: 0.1,
       },
     },
-  }
+  };
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
     show: { y: 0, opacity: 1 },
-  }
+  };
 
   const profileVariants = {
     hidden: { scale: 0.8, opacity: 0 },
@@ -99,7 +125,7 @@ export default function LinktreePage() {
       opacity: 1,
       transition: { type: "spring", stiffness: 100 },
     },
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 flex flex-col items-center justify-center p-4 sm:p-8 transition-colors duration-300">
@@ -146,9 +172,18 @@ export default function LinktreePage() {
             className="relative w-24 h-24 mb-4 rounded-full overflow-hidden border-4 border-white/20 dark:border-white/20"
             whileHover={{ scale: 1.05, rotate: 5 }}
           >
-             <Image src="https://avatars.githubusercontent.com/u/25608335?v=4" alt="Profile" fill className="object-cover" priority />
+            <Image
+              src="https://avatars.githubusercontent.com/u/25608335?v=4"
+              alt="Profile"
+              fill
+              className="object-cover"
+              priority
+            />
           </motion.div>
-          <motion.h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2" whileHover={{ scale: 1.05 }}>
+          <motion.h1
+            className="text-2xl font-bold text-slate-900 dark:text-white mb-2"
+            whileHover={{ scale: 1.05 }}
+          >
             PROTON
           </motion.h1>
           <motion.p
@@ -157,12 +192,18 @@ export default function LinktreePage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-             Software Engineer, Disc Jockey (DJ), Music producer. Sharing my journey and connecting with amazing people.
+            Software Engineer, Disc Jockey (DJ), Music producer. Sharing my
+            journey and connecting with amazing people.
           </motion.p>
         </motion.div>
 
         {/* Links section */}
-        <motion.div className="space-y-3" variants={containerVariants} initial="hidden" animate="show">
+        <motion.div
+          className="space-y-3"
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+        >
           {links.map((link, index) => (
             <motion.div
               key={index}
@@ -172,7 +213,12 @@ export default function LinktreePage() {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >
-              <Link href={link.url} target="_blank" rel="noopener noreferrer" className="block">
+              <Link
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
                 <motion.div
                   className={`relative overflow-hidden rounded-xl bg-gradient-to-r dark:${link.color.dark} ${link.color.light}`}
                   animate={{
@@ -184,8 +230,12 @@ export default function LinktreePage() {
                 >
                   <div className="relative flex items-center justify-between bg-white/90 dark:bg-slate-900 rounded-xl p-4 h-14">
                     <div className="flex items-center">
-                      <span className="mr-3 text-slate-900 dark:text-white">{link.icon}</span>
-                      <span className="font-medium text-slate-900 dark:text-white">{link.title}</span>
+                      <span className="mr-3 text-slate-900 dark:text-white">
+                        {link.icon}
+                      </span>
+                      <span className="font-medium text-slate-900 dark:text-white">
+                        {link.title}
+                      </span>
                     </div>
                     <motion.div
                       animate={{
@@ -210,9 +260,11 @@ export default function LinktreePage() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
         >
-          <div className="mt-2 text-xs text-slate-500">Copyright © 2025 - present</div>
+          <div className="mt-2 text-xs text-slate-500">
+            Copyright © 2025 - present
+          </div>
         </motion.div>
       </div>
     </div>
-  )
+  );
 }
